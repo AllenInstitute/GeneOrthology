@@ -9,8 +9,8 @@ GeneOntology is an R package and associated csv file for creating snapshots of t
 #### Downloading precomputed tables
 
 Snapshots created 3 November 2023
-* Gene conversions between mouse and human: mouse_human_orthologs_11022023.csv
-* Gene conversions between 26 mammalian species (see below): mammalian_orhologs_11022023
+* Gene conversions between mouse and human: mouse_human_orthologs_20231103.csv
+* Gene conversions between 27 mammalian species (see below): mammalian_orthologs_20231103
 
 #### Using the R package
 
@@ -20,13 +20,30 @@ install.packages("remotes", repos='http://cran.us.r-project.org')
 remotes::install_github("AllenInstitute/GeneOrthology", build_vignettes = TRUE)
 ```
 
-Open R and follow the vignette:
+Run the code
 ```
+# Load the library
 library(GeneOrthology)
-browse_vignettes("GeneOrthology")
-```
 
-The vignette can also be viewed in HTML format at this link.
+# Create the mouse/human orthology table
+build_orthology_table(taxIDs = setNames(c(9606,10090),c("human","mouse")), 
+                      primaryTaxID = 9606, outputFilePrefix="mouse_human_orthologs",returnTable=FALSE)
+
+# Create the 27 mammal table (anchored in human)
+taxIDs <- setNames(c(9669, 37347, 10116, 13616, 39432, 
+                     9823, 9361, 9986, 60711, 9598, 
+                     30608, 10181, 37293, 9545, 9544, 
+                     10090, 30611, 9685, 9595, 9606, 
+                     9483, 9742, 9516, 9614, 9407, 
+                     9555, 9999),
+                     c("Ferret", "Treeshrew", "Rat", "Opossum", "Squirrel.monkey", 
+                     "Pig", "Armadillo.Nine.banded", "Rabbit", "African.green.monkey", "Chimpanzee", 
+                     "Mouse.lemur", "Naked.mole.rat", "Owl.monkey", "Macaque.pig-tailed", "Macaque.rhesus", 
+                     "Mouse", "Galago", "Cat", "Gorilla", "Human", 
+                     "Marmoset", "Harbor.porpoise", "Capuchin", "Coyote", "Egyptian.fruit.bat", 
+                     "Olive.baboon", "Squirrel.Arctic ground."))
+build_orthology_table(taxIDs = taxIDs, primaryTaxID = 9606, outputFilePrefix="mammalian_orthologs",returnTable=FALSE)
+```
 
 ### Mammalian species list
 
@@ -61,7 +78,7 @@ This list includes all mammals currently studied at the Allen Institute for Brai
 |Squirrel monkey|Saimiri boliviensis boliviensis|39432|
 |Treeshrew|Tupaia belangeri|37347|
 
-
+This species list is included in the downloadable file, but **any species supported by NCBI can be entered into this function**.  Taxonomy IDs for other species can be found on NCBI: https://www.ncbi.nlm.nih.gov/taxonomy.  The taxonomizr R library provides a convenient wrapper for this information (https://github.com/sherrillmix/taxonomizr/).  Also gene info is only currently supported for mammals, but please let me know if you'd like this to be extended to other species.
 
 
 ### License
@@ -70,7 +87,7 @@ The license for this package is available on Github at: https://github.com/Allen
 
 ### Level of Support
 
-We do not anticipate updates to this tool, so long as NCBI retains current format of ontology table.
+We do not anticipate updates to this tool, so long as NCBI retains current format of ontology table.  That said, we encourage submission of issues.
 
 ### Contribution Agreement
 
