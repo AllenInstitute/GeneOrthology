@@ -9,21 +9,30 @@ build_orthology_table(
   primaryTaxID = 9606,
   geneOrthologs = "https://ftp.ncbi.nlm.nih.gov/gene/DATA/gene_orthologs.gz",
   addEnsemblID = TRUE,
-  addGeneInfo = c("Symbol", "description", "type_of_gene"),
+  addGeneInfoFirst = c("Symbol", "type_of_gene", "description"),
+  addGeneInfoAll = c("Symbol"),
+  includeNonMammalianSpecies = FALSE,
+  verbose = FALSE,
   outputFilePrefix = "ortholog_table",
-  returnTable = TRUE
+  returnTable = FALSE
 )
 }
 \arguments{
 \item{taxIDs}{A named vector of all species with associated taxonomy IDs (names are common names to show up in columns, and values are NCBI taxa IDs)}
 
-\item{primaryTaxID}{A numeric vector of the species to compare against. This MUST be included in the taxIDs. Default is 9606 (human)}
+\item{primaryTaxID}{A numeric vector of one or more species to compare against. Default is 9606 (human). These all MUST be included in the taxIDs. If more than one are provided, any additional species are only used to fill in "NA" slots in the initial table, in the order provided.  Possible options include 7955 (zebrafish), 9031 (chicken), 9606 (human), 9615 (dog), 9685 (cat), 9823 (pig), 9913 (cow), 10090 (mouse), and 10116 (rat), since (as of 5 November 2023), these are the only species listed as primary species in the NCBI orthology table.}
 
 \item{geneOrthologs}{The gene_orthologs.gz file updated daily. A local file in the same format can be provided, but otherwise leave the default link as is.}
 
 \item{addEnsemblID}{Should EnsemblIDs be added for each geneID?}
 
-\item{addGeneInfo}{Gene info to include with each gene for the primary taxonomy (NULL for none). For species other than mouse and human, this can be very slow.  Currently this is only compatible with mammalial species.  Sensible defaults are included, but all options include: "Symbol", "LocusTag", "Synonyms", "dbXrefs", "chromosome", "map_location", "description", "type_of_gene", "Symbol_from_nomenclature_authority", "Full_name_from_nomenclature_authority", "Nomenclature_status", "Other_designations", "Modification_date", "Feature_type"}
+\item{addGeneInfoFirst}{Gene info to include with each gene for the first primary species. To skip gene info, set to NULL.  Sensible defaults are included, but all options include: "Symbol", "LocusTag", "Synonyms", "dbXrefs", "chromosome", "map_location", "description", "type_of_gene", "Symbol_from_nomenclature_authority", "Full_name_from_nomenclature_authority", "Nomenclature_status", "Other_designations", "Modification_date", "Feature_type"}
+
+\item{addGeneInfoAll}{Gene info to include with each gene for every other species (default is "Symbol"). Same options as above are allowed. Ignored if addGeneInfoFirst is set to NULL.}
+
+\item{includeNonMammalianSpecies}{Are any non-mammalian species used (default is FALSE). This is only used to determine which gene info file to download. The mammalian file is ~190MB, while the all species file in ~1GB.}
+
+\item{verbose}{Report status (default FALSE). Note that fread may report status of large file downloads regardless of TRUE/FALSE setting.}
 
 \item{outputFilePrefix}{Prefix for outputted file name (or NULL to not output file). File will be outputFilePrefix_[date].csv.}
 

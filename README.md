@@ -9,9 +9,9 @@ GeneOntology is an R package and associated csv file for creating snapshots of t
 Click on this button on the right side of the screen after you click on one of the links below to download to precomputed orthology table:
 ![image](https://github.com/AllenInstitute/GeneOrthology/assets/25486679/3d176b70-70f1-4a09-b5d4-741b4ea714e3)
 
-**Snapshots created on 3 November 2023.**  These files contain human gene symbols (and other info), with Ensembl IDs and NCBI gene IDs for every species. 
-* Gene conversions between mouse and human: **[mouse_human_orthologs_20231103.csv](https://github.com/AllenInstitute/GeneOrthology/blob/main/csv/mouse_human_orthologs_20231103.csv)**
-* Gene conversions between 27 mammalian species (see below): **[mammalian_orthologs_20231103](https://github.com/AllenInstitute/GeneOrthology/blob/main/csv/mammalian_orthologs_20231103.csv).** (Note that a few of these species do not have human homologies computed and therefore have NA in every row.)
+**Snapshots created on 4 November 2023.**  These files contain human gene symbols (and other info), with Ensembl IDs and NCBI gene IDs for every species. 
+* Gene conversions between mouse, human, marmoset, and macaque (rhesus): **[mouse_human_marmoset_macaque_orthologs_20231104.csv](https://github.com/AllenInstitute/GeneOrthology/blob/main/csv/mouse_human_marmoset_macaque_orthologs_20231104.csv)**
+* Gene conversions between 27 mammalian species, anchored to all available mammalian species (see below): **[mammalian_orthologs_20231104](https://github.com/AllenInstitute/GeneOrthology/blob/main/csv/mammalian_orthologs_20231104.csv).** (Note that Treeshrew, Squirrel monkey, Harbor porpoise, Capuchin, and Coyote are not included in NCBI's gene ortholog table and are omitted.)
 
 ## Using the R package
 
@@ -26,25 +26,29 @@ Run the code
 # Load the library
 library(GeneOrthology)
 
-# Create the mouse/human orthology table
-build_orthology_table(taxIDs = setNames(c(9606,10090),c("human","mouse")), 
-                      primaryTaxID = 9606, outputFilePrefix="mouse_human_orthologs",returnTable=FALSE)
+# Create the mouse/human/marmoset/macaque orthology table, anchored to human
+taxIDs <- setNames(c(9606,10090,9483,9544),
+                   c("human","mouse","marmoset","rhesus_macaque"))
+build_orthology_table(taxIDs = taxIDs,  primaryTaxID = 9606, 
+                      outputFilePrefix="mouse_human_marmoset_macaque_orthologs")
 
-# Create the 27 mammal table (anchored in human)
+# Create the 27 mammal (+zebrafish) table, anchored in multiple species
 taxIDs <- setNames(c(9669, 37347, 10116, 13616, 39432, 
                      9823, 9361, 9986, 60711, 9598, 
                      30608, 10181, 37293, 9545, 9544, 
                      10090, 30611, 9685, 9595, 9606, 
                      9483, 9742, 9516, 9614, 9407, 
-                     9555, 9999),
-                     c("Ferret", "Treeshrew", "Rat", "Opossum", "Squirrel.monkey", 
+                     9555, 9999, 7955),
+                   c("Ferret", "Treeshrew", "Rat", "Opossum", "Squirrel.monkey", 
                      "Pig", "Armadillo.Nine.banded", "Rabbit", "African.green.monkey", "Chimpanzee", 
-                     "Mouse.lemur", "Naked.mole.rat", "Owl.monkey", "Macaque.pig-tailed", "Macaque.rhesus", 
+                     "Mouse.lemur", "Naked.mole.rat", "Owl.monkey", "Macaque.pig.tailed", "Macaque.rhesus", 
                      "Mouse", "Galago", "Cat", "Gorilla", "Human", 
                      "Marmoset", "Harbor.porpoise", "Capuchin", "Coyote", "Egyptian.fruit.bat", 
-                     "Olive.baboon", "Squirrel.Arctic ground."))
-build_orthology_table(taxIDs = taxIDs, primaryTaxID = 9606, outputFilePrefix="mammalian_orthologs",returnTable=FALSE)
-# Note that a few of these species do not have human homologies computed and therefore have NA in every row.
+                     "Olive.baboon", "Squirrel.Arctic.ground","zebrafish"))
+build_orthology_table(taxIDs = taxIDs, primaryTaxID = c(9606,10090,10116,9615,9685,9823,9913,7955),  
+                      outputFilePrefix="mammalian_orthologs",verbose=TRUE)
+# A few of these species do not have human homologies computed and are omitted from the output.
+# It's also worth noting that anchoring to all of these additional species adds a total of ~100 orthology pairs. 
 ```
 
 ## Mammalian species list
