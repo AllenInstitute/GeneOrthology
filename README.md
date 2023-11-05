@@ -18,7 +18,7 @@ Click on this button on the right side of the screen after you click on one of t
 Install the package:
 ```
 install.packages("remotes", repos='http://cran.us.r-project.org')
-remotes::install_github("AllenInstitute/GeneOrthology", build_vignettes = TRUE)
+remotes::install_github("AllenInstitute/GeneOrthology")
 ```
 
 Run the code
