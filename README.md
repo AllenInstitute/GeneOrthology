@@ -1,18 +1,19 @@
 # GeneOntology
 
-### Overview
+## Overview
 
-GeneOntology is an R package and associated csv file for creating snapshots of the NCBI Gene ontology table (https://ftp.ncbi.nlm.nih.gov/gene/DATA/gene_orthologs.gz) for use with [MapMyCells](https://portal.brain-map.org/atlases-and-data/bkp/mapmycells) and other purposes.
+GeneOntology is an R package and associated csv file for creating snapshots of the NCBI Gene ontology table (https://ftp.ncbi.nlm.nih.gov/gene/DATA/gene_orthologs.gz) for use with **[MapMyCells](https://portal.brain-map.org/atlases-and-data/bkp/mapmycells)** and other purposes.  In addition, Ensembl IDs and other gene info are pulled from other tables from the [NCBI Gene page](https://www.ncbi.nlm.nih.gov/gene) FTP server.  These NCBI files are all updated daily and so the date is appended to all outputted files in the format YYYYMMDD.  Unless otherwise noted, all ortholog tables provided in csv format are anchored to human genes.
 
-### How to use the package
+## Downloading precomputed tables
 
-#### Downloading precomputed tables
+Click on this button on the right side of the screen after you click on one of the links below to download to precomputed orthology table:
+![image](https://github.com/AllenInstitute/GeneOrthology/assets/25486679/3d176b70-70f1-4a09-b5d4-741b4ea714e3)
 
-Snapshots created 3 November 2023
-* Gene conversions between mouse and human: mouse_human_orthologs_20231103.csv
-* Gene conversions between 27 mammalian species (see below): mammalian_orthologs_20231103
+**Snapshots created on 3 November 2023.**  These files contain human gene symbols (and other info), with Ensembl IDs and NCBI gene IDs for every species. 
+* Gene conversions between mouse and human: **[mouse_human_orthologs_20231103.csv](https://github.com/AllenInstitute/GeneOrthology/blob/main/csv/mouse_human_orthologs_20231103.csv)**
+* Gene conversions between 27 mammalian species (see below): **[mammalian_orthologs_20231103](https://github.com/AllenInstitute/GeneOrthology/blob/main/csv/mammalian_orthologs_20231103.csv).** (Note that a few of these species do not have human homologies computed and therefore have NA in every row.)
 
-#### Using the R package
+## Using the R package
 
 Install the package:
 ```
@@ -43,9 +44,10 @@ taxIDs <- setNames(c(9669, 37347, 10116, 13616, 39432,
                      "Marmoset", "Harbor.porpoise", "Capuchin", "Coyote", "Egyptian.fruit.bat", 
                      "Olive.baboon", "Squirrel.Arctic ground."))
 build_orthology_table(taxIDs = taxIDs, primaryTaxID = 9606, outputFilePrefix="mammalian_orthologs",returnTable=FALSE)
+# Note that a few of these species do not have human homologies computed and therefore have NA in every row.
 ```
 
-### Mammalian species list
+## Mammalian species list
 
 This list includes all mammals currently studied at the Allen Institute for Brain Science (as of 3 November 2023):
 |English Name|Species|NCBI TaxID|
@@ -78,17 +80,22 @@ This list includes all mammals currently studied at the Allen Institute for Brai
 |Squirrel monkey|Saimiri boliviensis boliviensis|39432|
 |Treeshrew|Tupaia belangeri|37347|
 
-This species list is included in the downloadable file, but **any species supported by NCBI can be entered into this function**.  Taxonomy IDs for other species can be found on NCBI: https://www.ncbi.nlm.nih.gov/taxonomy.  The taxonomizr R library provides a convenient wrapper for this information (https://github.com/sherrillmix/taxonomizr/).  Also gene info is only currently supported for mammals, but please let me know if you'd like this to be extended to other species.
+This species list is included in the downloadable file, but **any species supported by NCBI can be entered into this function**.  Taxonomy IDs for other species can be found on NCBI: https://www.ncbi.nlm.nih.gov/taxonomy.  The taxonomizr R library provides a convenient wrapper for this information (https://github.com/sherrillmix/taxonomizr/).  Adding gene information is only currently supported for mammals, but please let me know if you'd like this to be extended to other species.
 
+## Contributions and updates
 
-### License
+#### License
 
-The license for this package is available on Github at: https://github.com/AllenInstitute/allen_institute_nomenclature/blob/master/LICENSE
+The license for this package is available on Github at: https://github.com/AllenInstitute/GeneOrthology/blob/master/LICENSE
 
-### Level of Support
+#### Level of Support
 
 We do not anticipate updates to this tool, so long as NCBI retains current format of ontology table.  That said, we encourage submission of issues.
 
-### Contribution Agreement
+#### Contribution Agreement
 
-If you contribute code to this repository through pull requests or other mechanisms, you are subject to the Allen Institute Contribution Agreement, which is available in full at: https://github.com/AllenInstitute/allen_institute_nomenclature/blob/master/CONTRIBUTION
+If you contribute code to this repository through pull requests or other mechanisms, you are subject to the Allen Institute Contribution Agreement, which is available in full at: https://github.com/AllenInstitute/GeneOrthology/blob/master/CONTRIBUTION
+
+#### Comments, issues, or suggestions?
+
+Please make direct pull requests, submit issues, or contact [Jeremy Miller](mailto:jeremym@alleninstitute.org) with any input.
