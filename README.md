@@ -7,6 +7,7 @@ GeneOntology is an R package and associated csv file for creating snapshots of t
 ## Downloading precomputed tables
 
 Click on this button on the right side of the screen after you click on one of the links below to download to precomputed orthology table:
+
 ![image](https://github.com/AllenInstitute/GeneOrthology/assets/25486679/3d176b70-70f1-4a09-b5d4-741b4ea714e3)
 
 **Snapshots created on 8 November 2023.**  These files contain human gene symbols (and other info), with Ensembl IDs and NCBI gene IDs for every species. 
@@ -21,18 +22,18 @@ install.packages("remotes", repos='http://cran.us.r-project.org')
 remotes::install_github("AllenInstitute/GeneOrthology")
 ```
 
-Run the code
+Run the code for a simple example to create the mouse/human/marmoset/macaque orthology table above. This is the most common use case.  
 ```
-# Load the library
 library(GeneOrthology)
-
-# Create the mouse/human/marmoset/macaque orthology table, anchored to human
 taxIDs <- setNames(c(9606,10090,9483,9544),
                    c("human","mouse","marmoset","rhesus_macaque"))
 build_orthology_table(taxIDs = taxIDs,  primaryTaxID = 9606, 
                       outputFilePrefix="mouse_human_marmoset_macaque_orthologs")
+```
 
-# Create the 27 mammal (+zebrafish) table, anchored in multiple species
+Here is a bit more complicated example showing how to create the 27 mammal (+zebrafish) table above, which is anchored in multiple species and includes non-mammals.  
+```
+library(GeneOrthology)
 taxIDs <- setNames(c(9669, 246437, 10116, 13616, 27679, 
                      9823, 9361, 9986, 60711, 9598, 
                      30608, 10181, 37293, 9545, 9544, 
@@ -49,10 +50,13 @@ build_orthology_table(taxIDs = taxIDs, primaryTaxID = c(9606,10090,10116,9615,96
                       outputFilePrefix="mammalian_orthologs",verbose=TRUE,
                       includeNonMammalianSpecies = TRUE)  # To include zebrafish gene symbols, but much slower.
 # A few of these species do not have human homologies computed and are omitted from the output.
-# It's also worth noting that anchoring to all of these additional species adds a total of ~100 orthology pairs. 
+# It's also worth noting that anchoring to all of these additional species ONLY adds a total of
+#   ~100 orthology pairs and probably is not necessary. 
 ```
 
 ## Mammalian species list
+
+#### Current list
 
 This list includes all mammals currently studied at the Allen Institute for Brain Science (as of 8 November 2023), as well as related species with NCBI orthologs to human:
 |English Name|Species|NCBI TaxID|
@@ -89,9 +93,13 @@ This list includes all mammals currently studied at the Allen Institute for Brai
 |Treeshrew|Tupaia belangeri|37347|
 |Yangtze finless porpoise|Neophocaena asiaeorientalis asiaeorientalis|1706337|
 
-This species list is included in the downloadable file, but **any species supported by NCBI can be entered into this function**.  Taxonomy IDs for other species can be found on NCBI: https://www.ncbi.nlm.nih.gov/taxonomy.  
+Available speciesfrom this list are included in the downloadable csv file.
 
-The **[taxonomizr R library](https://github.com/sherrillmix/taxonomizr/)** also provides a convenient wrapper for this information :
+#### Finding additional species with orthologs
+
+Any species supported by NCBI can be included in the build_orthology_table function (mammalian or otherwise).  Currently the vast majority of orthologs are matched against either human or zebrafish.  Taxonomy IDs for other species can be found on the **[NCBI taxonomy website](https://www.ncbi.nlm.nih.gov/taxonomy)** manually.  
+
+The **[taxonomizr R library](https://github.com/sherrillmix/taxonomizr/)** also provides a convenient wrapper for this information in R.  This script shows how to get additional information about taxa with NCBI orthologs and to search for species of interest.
 
 ```
 ## Install and load the taxonomizr
@@ -117,8 +125,6 @@ commons  <- getCommon(taxids,database)
 isInNCBI <- unlist(lapply(commons,function(x) sum(grepl("squirrel monkey",x[,1]))))>0
 getCommon(taxids[isInNCBI],database)
 ```
-
-Additional 
 
 ## Contributions and updates
 
