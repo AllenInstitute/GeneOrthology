@@ -10,9 +10,9 @@ Click on this button on the right side of the screen after you click on one of t
 
 ![image](https://github.com/AllenInstitute/GeneOrthology/assets/25486679/3d176b70-70f1-4a09-b5d4-741b4ea714e3)
 
-**Snapshots created on 8 November 2023.**  These files contain human gene symbols (and other info), with Ensembl IDs and NCBI gene IDs for every species. 
-* Gene conversions between mouse, human, marmoset, and macaque (rhesus): **[mouse_human_marmoset_macaque_orthologs_20231108.csv](https://github.com/AllenInstitute/GeneOrthology/blob/main/csv/mouse_human_marmoset_macaque_orthologs_20231108.csv)**
-* Gene conversions between 27 mammalian species, anchored to all available mammalian species (see below): **[mammalian_orthologs_20231108](https://github.com/AllenInstitute/GeneOrthology/blob/main/csv/mammalian_orthologs_20231108.csv).** (Note that we include dog as a stand-in for coyote, tufted capuchin as stand-in for capuchin,  Yangtze finless porpoise as a stand-in for porpoise, Chinese tree shrew for tree shrew)
+**Snapshots created on 13 November 2023.**  These files contain human gene symbols (and other info), with Ensembl IDs and NCBI gene IDs for every species. 
+* Gene conversions between mouse, human, marmoset, and macaque (rhesus): **[mouse_human_marmoset_macaque_orthologs_20231113.csv](https://github.com/AllenInstitute/GeneOrthology/blob/main/csv/mouse_human_marmoset_macaque_orthologs_20231113.csv)**
+* Gene conversions between 27 mammalian species, anchored to all available mammalian species (see below): **[mammalian_orthologs_20231113](https://github.com/AllenInstitute/GeneOrthology/blob/main/csv/mammalian_orthologs_20231113.csv).** (Note that we include dog as a stand-in for coyote and Vaquita as a stand-in for porpoise.)
 
 ## Using the R package
 
@@ -38,13 +38,13 @@ taxIDs <- setNames(c(9669, 246437, 10116, 13616, 27679,
                      9823, 9361, 9986, 60711, 9598, 
                      30608, 10181, 37293, 9545, 9544, 
                      10090, 30611, 9685, 9595, 9606, 
-                     9483, 1706337, 9515, 9614, 9407, 
+                     9483, 42100, 9515, 9614, 9407, 
                      9555, 9999, 9615, 7955),
                    c("Ferret", "Chinese.Treeshrew", "Rat", "Opossum", "Squirrel.monkey", 
                      "Pig", "Armadillo.Nine.banded", "Rabbit", "African.green.monkey", "Chimpanzee", 
                      "Mouse.lemur", "Naked.mole.rat", "Owl.monkey", "Macaque.pig.tailed", "Macaque.rhesus", 
                      "Mouse", "Galago", "Cat", "Gorilla", "Human", 
-                     "Marmoset", "Yangtze.finless.porpoise", "Tufted.capuchin", "Coyote", "Egyptian.fruit.bat", 
+                     "Marmoset", "Vaquita", "Tufted.capuchin", "Coyote", "Egyptian.fruit.bat", 
                      "Olive.baboon", "Squirrel.arctic.ground","dog","zebrafish"))
 build_orthology_table(taxIDs = taxIDs, primaryTaxID = c(9606,10090,10116,9615,9685,9823,9913,7955),  
                       outputFilePrefix="mammalian_orthologs",verbose=TRUE,
@@ -63,7 +63,6 @@ This list includes all mammals currently studied at the Allen Institute for Brai
 | ----- | ----- | ----- |
 |African green monkey|Chlorocebus sabaeus|60711|
 |Armadillo (Nine-banded)|Dasypus novemcinctus|9361|
-|Capuchin|Sapajus apella|9516|
 |Cat|Felis catus|9685|
 |Chimpanzee|Pan troglodytes|9598|
 |Chinese tree shrew|Tupaia chinensis|246437|
@@ -90,8 +89,7 @@ This list includes all mammals currently studied at the Allen Institute for Brai
 |Squirrel (Arctic ground)|Urocitellus parryii|9999|
 |Squirrel monkey|Saimiri boliviensis|27679|
 |Tufted capuchin|Sapajus apella|9515|
-|Treeshrew|Tupaia belangeri|37347|
-|Yangtze finless porpoise|Neophocaena asiaeorientalis asiaeorientalis|1706337|
+|Vaquita|Phocoena sinus|42100|
 
 Available speciesfrom this list are included in the downloadable csv file.
 
