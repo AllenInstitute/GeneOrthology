@@ -16,11 +16,14 @@ Click on this button on the right side of the screen after you click on one of t
 
 ## Using the R package
 
-Install the package:
+### Install the package:
+
 ```
 install.packages("remotes", repos='http://cran.us.r-project.org')
 remotes::install_github("AllenInstitute/GeneOrthology")
 ```
+
+### Creating orthology tables
 
 Run the code for a simple example to create the mouse/human/marmoset/macaque orthology table above. This is the most common use case.  
 ```
@@ -53,6 +56,33 @@ build_orthology_table(taxIDs = taxIDs, primaryTaxID = c(9606,10090,10116,9615,96
 # It's also worth noting that anchoring to all of these additional species ONLY adds a total of
 #   ~100 orthology pairs and probably is not necessary. 
 ```
+
+### Converting cell by gene matrices
+
+Once you have an orthology table with the current and target species created, a common use case is to convert a cell by gene matrix into one where gene names in the target species replace gene names in the current species. **This is a key step when mapping data across species using [MapMyCells](https://portal.brain-map.org/atlases-and-data/bkp/mapmycells).** As an example, we will convert a subset of the snRNA-seq dataset published in ['Conserved cell types with divergent features in human versus mouse cortex'](https://doi.org/10.1038/s41586-019-1506-7) from human to mouse. 
+```
+# Install (if needed), then load R library with query data set
+# --If you are using your own, read it in here to a variable called "dataIn" with genes as row names
+if(!is.element("hodge2019data",.packages(all.available = TRUE)))  # Install data package if not already installed
+  devtools::install_github("AllenInstitute/hodge2019data")
+library(hodge2019data)
+dataIn <- data_Hodge2019
+
+# Read in a conversion table generated from GeneOrthology
+convert <- read.csv("https://github.com/AllenInstitute/GeneOrthology/raw/main/csv/mouse_human_marmoset_macaque_orthologs_20231113.csv")
+
+# Do the conversion by gene symbol (note that ideally we'd do converion by EnsemblID)
+convert_by_symbol <- convert[!(is.na(convert$human_Symbol)|is.na(convert$mouse_Symbol)),c("human_Symbol","mouse_Symbol")] # Remove NAs from conversion table
+convert_by_symbol <- convert_by_symbol[is.element(convert_by_symbol$human_Symbol,rownames(dataIn)),] # Remove genes not in data matrix
+dataOut <- dataIn[match(convert_by_symbol$human_Symbol,rownames(dataIn)),] # Subset data to include only genes with mouse othologs
+rownames(dataOut) <- convert_by_symbol$mouse_Symbol # Convert gene names to mouse
+
+# Output the new data matrix
+write.csv(dataOut, "converted_data_matrix.csv")
+# Note: for output in a format compatible with MapMyCells, see documentation here:
+#  https://portal.brain-map.org/explore/file-requirements-and-limits
+```
+
 
 ## Mammalian species list
 
@@ -91,7 +121,7 @@ This list includes all mammals currently studied at the Allen Institute for Brai
 |Tufted capuchin|Sapajus apella|9515|
 |Vaquita|Phocoena sinus|42100|
 
-Available speciesfrom this list are included in the downloadable csv file.
+Available species from this list are included in the downloadable csv file.
 
 #### Finding additional species with orthologs
 
