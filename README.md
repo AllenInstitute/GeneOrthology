@@ -1,8 +1,8 @@
-# GeneOntology
+# GeneOrthology
 
 ## Overview
 
-GeneOntology is an R package and associated csv file for creating snapshots of the NCBI Gene ontology table (https://ftp.ncbi.nlm.nih.gov/gene/DATA/gene_orthologs.gz) for use with **[MapMyCells](https://portal.brain-map.org/atlases-and-data/bkp/mapmycells)** and other purposes.  In addition, Ensembl IDs and other gene info are pulled from other tables from the [NCBI Gene page](https://www.ncbi.nlm.nih.gov/gene) FTP server.  These NCBI files are all updated daily and so the date is appended to all outputted files in the format YYYYMMDD.  Unless otherwise noted, all ortholog tables provided in csv format are anchored to human genes.
+GeneOrthology is an R package and associated csv file for creating snapshots of the NCBI Gene orthology table (https://ftp.ncbi.nlm.nih.gov/gene/DATA/gene_orthologs.gz) for use with **[MapMyCells](https://portal.brain-map.org/atlases-and-data/bkp/mapmycells)** and other purposes.  In addition, Ensembl IDs and other gene info are pulled from other tables from the [NCBI Gene page](https://www.ncbi.nlm.nih.gov/gene) FTP server.  These NCBI files are all updated daily and so the date is appended to all outputted files in the format YYYYMMDD.  Unless otherwise noted, all ortholog tables provided in csv format are anchored to human genes.
 
 ## Downloading precomputed tables
 
@@ -162,7 +162,7 @@ The license for this package is available on Github at: https://github.com/Allen
 
 #### Level of Support
 
-We do not anticipate updates to this tool, so long as NCBI retains current format of ontology table.  That said, we encourage submission of issues.
+We do not anticipate updates to this tool, so long as NCBI retains current format of orthology table.  That said, we encourage submission of issues.
 
 #### Contribution Agreement
 
